@@ -1,0 +1,4 @@
+var(--mainbackcolor)
+var(--maintextcolor)
+var(--mainboxcolor)
+var(--mainsecondtextcolor)
