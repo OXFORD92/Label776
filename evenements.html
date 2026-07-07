@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Label 776</title>
+    <link rel="stylesheet" href="evenements.css" />
+    <link rel="stylesheet" href="css/nav.css">
+  </head>
+  <body>
+    <section id="billet" onclick="hideBillet()"><!-- vide au chargement --></section>
+      <script
+        type="text/javascript"
+        src="https://widget.weezevent.com/weez.js"
+      ></script>
+    </section>
+    <nav id="navbar">
+      <a href="index.html">
+        <img id="minilogo" class="lab" src="img/Label.png" />
+      </a>
+      <li>
+        <ul>
+          <a href="index.html">Acceuil</a>
+        </ul>
+        <ul>
+          <a href="location.html">Location</a>
+        </ul>
+        <ul>
+          <a href="">Evenement</a>
+        </ul>
+        <ul>  
+          <a id="plus" href="selection.html">Plus</a>
+        </ul>
+
+        <img id="btntheme" src="img/thème-logo.png" />
+      </li>
+    </nav>
+    <div id="navtel" class="navtel">
+      <h1 id="navtelbtn">Menu</h1>
+      <ul id="nav_list" class="nav__list">
+        <li class="nav__item1"><a href="index.html">Accueil</a></li>
+        <li class="nav__item2"><a href="location.html">Location</a></li>
+        <li class="nav__item1"><a href="#">Stream</a></li>
+        <li class="nav__item2"><a href="#">Evenement</a></li>
+        <li class="nav__item1"><a href="#">Shop</a></li>
+        <li class="nav__item2"><a href="#">A propos</a></li>
+        <li class="nav__item1"><a href="#">Contact</a></li>
+        <img id="btntheme1" src="img/thème-logo.png" />
+      </ul>
+    </div>
+    <div class="box1">
+      <h1>Evenements</h1>
+      <div class="box4">
+        <h1>Prochains évènements</h1>
+        <div class="box">
+          <h2 id="auce">Aucuns évènements actuels</h2>
+          <div id="news-container"></div>
+        </div>
+      </div>
+    <footer>
+      <img src="img/Label.png" alt="" />
+      <span>
+        <h3>Explorer</h3>
+        <a>Acceuil</a>
+        <a>Evenements</a>
+        <a href="apropos.html">A propos</a>
+      </span>
+      <span>
+        <h3>Contact</h3>
+        <a href="mailto:label776off@gmail.com">label776off@gmail.com</a>
+        <a>Nous contacter</a>
+      </span>
+    </footer>
+    <script src="evenements.js"></script>
+    <script src="model.js"></script>
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-app.js";
+      import {
+        getFirestore,
+        collection,
+        getDocs,
+      } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-firestore.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyApHGiqdbTgGAZibyATXlkA1OX-J8G2C-0",
+        authDomain: "label-776.firebaseapp.com",
+        projectId: "label-776",
+        storageBucket: "label-776.firebasestorage.app",
+        messagingSenderId: "395531364093",
+        appId: "1:395531364093:web:7d804e029ddbcca4ab0094",
+        measurementId: "G-PG193DPTTY",
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const db = getFirestore(app);
+
+      async function displayNews() {
+        const querySnapshot = await getDocs(collection(db, "news"));
+        const container = document.getElementById("news-container");
+        const bil = document.getElementById("billet");
+        const auce = document.getElementById("auce");
+
+        if (querySnapshot.empty) {
+          auce.style.display = "flex";
+          return;
+        }
+
+        auce.style.display = "none";
+
+        let html = "";
+        querySnapshot.forEach((doc) => {
+          const data = doc.data();
+          const date = data.date?.toDate
+            ? data.date.toDate().toLocaleString()
+            : "Date inconnue";
+
+html += `
+  <div style="padding:10px;">
+    <h2>${data.title}</h2>
+    <h3>Détail de l'évènement :</h3>
+    <p>${data.content}</p>
+    <small>${data.calen}</small><br>
+    <div id="btn-ticket">
+    <button
+        class="ticket-btn"
+        data-widget="${data.widgetUrl}">
+        Achetez vos billets !
+    </button>
+    </div>
+  </div>`;
+        });
+
+        container.innerHTML = html;
+      }
+
+      displayNews();
+      // Un seul listener pour tous les futurs boutons
+      document
+        .getElementById("news-container")
+        .addEventListener("click", function (e) {
+          // On cherche l'élément le plus proche ayant la classe ticket-btn
+          const btn = e.target.closest(".ticket-btn");
+          if (!btn) return; // cliquer ailleurs : on ignore
+
+          const id = btn.id; // ex. "btn5"
+          console.log("Bouton cliqué →", id);
+        });
+
+// Affiche le widget correspondant
+function showBillet(widgetUrl) {
+  const billet = document.getElementById("billet");
+
+  // Contenu HTML à insérer
+  billet.innerHTML = `
+    <div onclick="event.stopPropagation()">   <!-- stopPropagation pour ne pas fermer quand on clique dans la pop‑in -->
+      <a
+        class="weezevent-widget-integration"
+        href="${widgetUrl}"
+        data-src="${widgetUrl}"
+        data-resize="1"
+        data-width_auto="1"
+        data-use-container="yes"
+        data-noscroll="0"
+        data-type="neo"
+        target="_blank">
+        Billetterie Weezevent
+      </a>
+      <span style="display:block;text-align:right;margin-top:10px">
+        <button class="closebtn" onclick="hideBillet()">X</button>
+      </span>
+    </div>`;
+
+  // Recharge le script de Weezevent
+  const s = document.createElement("script");
+  s.src = "https://widget.weezevent.com/weez.js";
+  billet.appendChild(s);
+
+  billet.style.display = "flex";
+  document.body.classList.add("body_noscool"); // évite le scroll derrière
+}
+
+// Délégation de clics sur les boutons billet
+document.getElementById("news-container").addEventListener("click", (e) => {
+  const btn = e.target.closest(".ticket-btn");
+  if (!btn) return;
+  const widgetUrl = btn.dataset.widget;
+  if (widgetUrl) showBillet(widgetUrl);
+});
+
+    </script>
+  </body>
+</html>
