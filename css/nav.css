@@ -1,0 +1,261 @@
+*{
+    text-decoration: none;
+    margin: 0;
+    padding: 0;
+}
+
+
+#navbar{
+    z-index: 6;
+    display: flex;
+    position: fixed;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: auto;
+    padding-bottom:30px ;
+    backdrop-filter: blur(10px);
+    top: 0;
+    transition: top 0.3s;
+    background-color: #d9d9d922;
+    border-bottom-style: double;
+    border-bottom-color: black;
+}
+
+.lab{
+    height: 50px;
+    margin-left: 150px;
+    margin-top: 40px;
+    filter: saturate(0) invert(1);
+}
+
+nav li{
+    display: flex;
+    flex-wrap: wrap;
+    text-decoration: none;
+    list-style: none;
+    position: absolute;
+    right: 0;
+    margin-right: 10%;
+    margin-top: 50px;
+
+}
+
+
+nav li a{
+    margin-right: 30px;
+    font-family: Inter;
+    font-size: 20px;    
+    color: var(--maintextcolor);
+    
+}
+
+
+
+nav li img{
+    height: 50px;
+    margin-top: -15px;
+}
+
+nav li img:hover{
+    cursor: pointer;
+}
+
+
+#plus{
+    display: flex;
+    justify-content: center;
+    width: 60px;
+    height: 27px;
+    background-color: var(--maintextcolor);
+    color: var(--mainbackcolor);
+    border-radius: 5px;
+    margin-top: -3px;
+    padding-top: 2px;
+}
+
+@media screen and (max-width:900px) {
+    .lab{
+        margin-left: 30px;
+    }
+}
+
+.navtel{
+    z-index: 7;
+    top: 0;
+    position: fixed;
+    width: 100%;
+display: none;
+justify-content: center;
+flex-direction: column;
+align-items: center;
+height: auto;
+background-color: #d9d9d922;
+backdrop-filter: blur(20px);
+transition: top 0.6s;
+border-bottom-style: double;
+border-bottom-color: black;
+}
+
+.navtel span {
+    background-image: url(/img/logopiurplacer.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size:contain;
+    background-origin:padding-box;
+height: 100px;
+width: 100%;
+}
+
+
+.nav__list {
+display: none;
+height: 80vh;
+color:var(--maintextcolor);
+overflow: scroll;
+}
+
+.nav__list__open {
+    display: flex;
+    flex-direction: column;
+}
+
+.navtel li {
+    margin-top: 30px;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+align-items: center;}
+
+.navtel li a {
+    color:var(--maintextcolor);
+    font-family: "Bebas Neue", sans-serif;
+    font-weight: 500;
+    font-size: clamp(10px, 10vw, 50px);
+    
+}
+
+.navtel img {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    height: 50px;
+    margin-bottom: 80px;
+    margin-right: 20px;
+}
+
+@supports (-webkit-touch-callout: none) {
+    .navtel{
+        z-index: 7;
+        top: 0;
+        position: fixed;
+        width: 100%;
+    display: none;
+    justify-content: start;
+    flex-direction: column;
+    align-items: center;
+    height: auto;
+    background-color: #d9d9d922;
+    backdrop-filter: blur(20px);
+    transition: top 0.6s;
+    border-bottom-style: double;
+    border-bottom-color: black;
+    }
+
+    .navtel h1 {
+        width: 100%;
+        text-align: center;
+        font-size: clamp(40px, 30vw, 100px);
+        font-family: julee;
+        font-weight: 200;
+        color:var(--maintextcolor);
+    user-select: none;
+    }
+
+
+    .nav__list {
+    display: none;
+    height: 100vh;
+    color:var(--maintextcolor);
+
+    }
+
+    .nav__list__open {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .navtel li {
+        margin-top: 15px;
+        text-decoration: none;
+        display: flex;
+        flex-direction: column;
+    align-items: center;}
+
+    .navtel li a {
+        color:var(--maintextcolor);
+        font-family: julee;
+        font-weight: 500;
+        font-size: clamp(10px, 10vw, 50px);
+        
+    }
+
+    .navtel img {
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        height: 50px;
+        margin-bottom: 230px;
+        margin-right: 20px;
+    }
+
+
+}
+
+
+
+.navtel .nav__item1{
+    animation: navtel 0.5s ease-in-out;
+}
+
+.navtel .nav__item2{
+    animation: navtel2 0.5s ease-in-out;
+}
+
+@keyframes navtel {
+    0% {
+        margin-right: -1500px;
+    }
+    100%{
+        margin-right: 0;
+    }
+}
+
+@keyframes navtel2 {
+    0% {
+        margin-left: -1500px;
+    }
+    100%{
+        margin-left: 0;
+    }
+}
+
+
+
+@media screen and (max-width: 780px) {
+    #navbar{
+        display: none;
+    }
+
+    .navtel{
+        display: flex;
+    }
+
+    .body_noscool{
+        overflow: hidden;
+    }
+}
+
+.invert{
+    filter: invert(0);
+}
